@@ -209,17 +209,19 @@ let menosVendidoDeEnero = products.slice(products.length -1)
 console.log("El menos vendido de enero", menosVendidoDeEnero);
  */
 
+function total(userValue){
 
-function total(){
-    let suma = {Enero: 0}
-    for (let i = 0; i < products.length; i++) {
-         let rs = products[i].Enero + suma
-        console.log(rs);
-        }
-        return suma
-    }
+	for (let i = 0; i < products.length; i++) {
+		if(products[i].Producto == userValue){
+			let rs = products[i].Enero + products[i].Febrero + 	products[i].Marzo + products[i].Abril + products[i].Mayo + products[i].Junio
+			console.log(rs);
+		}
+	}
+}
+total('Auriculares Airpods Pro')
 
-total()
+
+ 
 
 /* {
     Producto: "Smartphone Galaxy S23",
