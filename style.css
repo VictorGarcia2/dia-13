@@ -1,0 +1,67 @@
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin:auto;
+}
+table{
+    width: 100%;
+}
+
+th{
+    color:white;
+    background-color:rgba(178, 126, 255, 0.774);
+    height: 2rem;
+    border-radius: 8px 8px 0px 0px;
+    -webkit-border-radius: 8px 8px 0px 0px;
+    -moz-border-radius: 8px 8px 0px 0px;
+    -ms-border-radius: 8px 8px 0px 0px;
+    -o-border-radius: 8px 8px 0px 0px;
+  
+}
+
+.container{
+    width: 1200px;
+}
+td{
+    text-align: center;
+    border: 1px solid;
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -ms-border-radius: 8px;
+    -o-border-radius: 8px;
+    height: 2rem;
+}
+
+.button{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    padding-block: 1rem;
+}
+
+.button > input{
+    padding: .5rem 1rem;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.button >input:nth-child(1){
+    background-color: blueviolet;
+    color: white;
+}
+.button >input:nth-child(2){
+    background-color: rgb(43, 226, 113);
+    color: white;
+}
+.button >input:nth-child(3){
+    background-color: rgb(226, 43, 70);
+    color: white;
+}

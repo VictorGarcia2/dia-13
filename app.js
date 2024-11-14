@@ -1,3 +1,8 @@
+const tbody = document.querySelector('tbody')
+const miBotonMas = document.querySelector('#mibotonmas')
+const miBotonMenos = document.querySelector('#mibotonmenos')
+const miBotonMeses = document.querySelector('#mibotonmeses')
+const miBotonTodo = document.querySelector('#todos')
 const products = [
     {
         Producto: "Smartphone Galaxy S23",
@@ -181,15 +186,6 @@ const products = [
     },
     
 ]
-
-/* function meses(){
-	for (let i = 0; i < products.length; i++) {
-		let producto = products[i]
-		delete producto.Producto
-	}
-} */
-
-
 // Mas Vendido
 function masVendidoDeEnero(){
 	products.sort(function (a, b) {
@@ -201,14 +197,12 @@ function masVendidoDeEnero(){
 		}
 		return 0;
 	  });
-
 	let masVendido = products.slice(products.length -1)
-	console.log("El mas vendido de enero ", masVendido);
+	totalDeVentasPorMes()
+	return masVendido[0]
 }
-masVendidoDeEnero()
 // Menos vendido
 function menosVendidoDeEnero(){
-
 	products.sort(function (a, b) {
 		if (a.Enero < b.Enero) {
 		  return 1;
@@ -218,82 +212,123 @@ function menosVendidoDeEnero(){
 		}
 		return 0;
 	  });
-	
-	let menosVendido= products.slice(products.length -1) 
-	console.log("El menos vendido de enero ", menosVendido);
+	let menosVendido = products.slice(products.length -1) 
+	return menosVendido[0]
 }
-menosVendidoDeEnero()
-
-
-// Total producto por mes
- function total(userValue){
-	for (let i = 0; i < products.length; i++) {
-		if(products[i].Producto == userValue){
-			let rs = products[i].Enero + products[i].Febrero + 	products[i].Marzo + products[i].Abril + products[i].Mayo + products[i].Junio
-			console.log("Venta total del producto por meses", rs);
-		}
-	}
-}
-total('Auriculares Airpods Pro')
-
-
-
-//El mas vendido en los meses
-/* products.sort(function (a,b) {
-  return a.Enero - b.Enero;
-});
-let enero = products.slice(products.length -1)
-products.sort(function (a,b) {
-  return a.Febrero - b.Febrero;
-});
-let febrero = products.slice(products.length -1)
-products.sort(function (a,b) {
-  return a.Marzo - b.Marzo;
-});
-let marzo = products.slice(products.length -1)
-products.sort(function (a,b) {
-  return a.Abril - b.Abril;
-});
-let abril = products.slice(products.length -1)
-products.sort(function (a,b) {
-  return a.Mayo - b.Mayo;
-});
-let mayo = products.slice(products.length -1)
-products.sort(function (a,b) {
-  return a.Junio - b.Junio;
-});
-let junio = products.slice(products.length -1)
-
-let rs = [enero, febrero,marzo, abril, mayo, junio]
-
-
-let nuevaRespuesta = rs.slice(rs.length -1)
-
-console.log(nuevaRespuesta); */
-
-
 function totalDeVentasPorMes(){
 	let total = [];
 	for (let i = 0; i < products.length; i++) {
 		let product = products[i]
-		let suma = product.Enero + product.Febrero + product.Marzo + product.Abril + product.Mayo +product.Junio
+		let suma = product.Enero + product.Febrero + product.Marzo + product.Abril + product.Mayo + product.Junio
+		product['total'] = suma
 		let nuevoObj = {
-			product: product.Producto,
-			total: suma
-		}
-		total.push(nuevoObj)
+			Producto: product.Producto,
+			Enero: product.Enero,
+			Febrero: product.Febrero,
+			Marzo: product.Marzo,
+			Abril: product.Abril,
+			Mayo: product.Mayo,
+			Junio: product.Junio,
+			Total: suma
+		} 
+		total.push(nuevoObj) 
+		console.log(total);
 	}
 	return total
 }
-console.log(totalDeVentasPorMes());
-
 function masVendidoTodos(){
 	let totalVentas = totalDeVentasPorMes()
 	let sortetTotales = totalVentas.sort(function(a,b){
-		return a.total - b.total
+		return a.Total - b.Total
 	})
 	let more = sortetTotales.slice(sortetTotales.length -1)
-	return more
+	return more [0]
 }
 
-console.log(masVendidoTodos());
+function renovar(){
+	const nuevoProductoEstrella = masVendidoTodos()
+	console.log(nuevoProductoEstrella);
+
+}
+renovar()
+
+function loadTable(){
+	tbody.innerHTML = ''
+	const totalProduct = totalDeVentasPorMes()
+	for (let i = 0; i < products.length; i++) {
+		const product = products[i]
+		const totalVenta = totalProduct[i]
+		let bgcolor = ""
+		let color = ""
+		if (i%2 === 1){
+			bgcolor = "#ff6464"
+			color = "white"
+		}
+		let template = `<tr style="background-color:${bgcolor}; color:${color};">
+						<td>${product.Producto}</td>
+						<td>${product.Enero}</td>
+						<td>${product.Febrero}</td>
+						<td>${product.Marzo}</td>
+						<td>${product.Abril}</td>
+						<td>${product.Mayo}</td>
+						<td>${product.Junio}</td>
+						<td>${totalVenta.Total}</td>
+						</tr>`
+					 tbody.innerHTML += template
+				}
+				
+}
+
+
+miBotonTodo.addEventListener('click', function(){
+	loadTable()
+})
+miBotonMas.addEventListener('click', function(){
+	const product = masVendidoDeEnero()
+	tbody.innerHTML = ''
+	//const totalVenta = totalProduct[i]
+	let template = `<tr>
+						<td>${product.Producto}</td>
+						<td>${product.Enero}</td>
+						<td>${product.Febrero}</td>
+						<td>${product.Marzo}</td>
+						<td>${product.Abril}</td>
+						<td>${product.Mayo}</td>
+						<td>${product.Junio}</td>
+						<td>${product.total}</td>
+						</tr>`
+						tbody.innerHTML += template
+})
+miBotonMenos.addEventListener('click', function(){
+	const product = menosVendidoDeEnero()
+	//const totalVenta = totalProduct[i]
+	tbody.innerHTML = ''
+	let template = `<tr>
+						<td>${product.Producto}</td>
+						<td>${product.Enero}</td>
+						<td>${product.Febrero}</td>
+						<td>${product.Marzo}</td>
+						<td>${product.Abril}</td>
+						<td>${product.Mayo}</td>
+						<td>${product.Junio}</td>
+						<td>${product.total}</td>
+						</tr>`
+						tbody.innerHTML += template
+})
+miBotonMeses.addEventListener('click', function(){
+	const product = masVendidoTodos()
+	console.log(product);
+	//const totalVenta = totalProduct[i]
+	tbody.innerHTML = ''
+	let template = `<tr>
+						<td>${product.Producto}</td>
+						<td>${product.Enero}</td>
+						<td>${product.Febrero}</td>
+						<td>${product.Marzo}</td>
+						<td>${product.Abril}</td>
+						<td>${product.Mayo}</td>
+						<td>${product.Junio}</td>
+						<td>${product.Total}</td>
+						</tr>`
+						tbody.innerHTML += template
+})
