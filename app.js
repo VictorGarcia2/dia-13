@@ -182,53 +182,118 @@ const products = [
     
 ]
 
-/* products.sort(function (a, b) {
-    if (a.Enero > b.Enero) {
-      return 1;
-    }
-    if (a.Enero < b.Enero) {
-      return -1;
-    }
-    return 0;
-  });
+/* function meses(){
+	for (let i = 0; i < products.length; i++) {
+		let producto = products[i]
+		delete producto.Producto
+	}
+} */
 
-let masVendidoDeEnero = products.slice(products.length -1)
-console.log("El mas vendido de enero", masVendidoDeEnero);
 
-products.sort(function (a, b) {
-    if (a.Enero < b.Enero) {
-      return 1;
-    }
-    if (a.Enero > b.Enero) {
-      return -1;
-    }
-    return 0;
-  });
+// Mas Vendido
+function masVendidoDeEnero(){
+	products.sort(function (a, b) {
+		if (a.Enero > b.Enero) {
+		  return 1;
+		}
+		if (a.Enero < b.Enero) {
+		  return -1;
+		}
+		return 0;
+	  });
 
-let menosVendidoDeEnero = products.slice(products.length -1)
-console.log("El menos vendido de enero", menosVendidoDeEnero);
- */
+	let masVendido = products.slice(products.length -1)
+	console.log("El mas vendido de enero ", masVendido);
+}
+masVendidoDeEnero()
+// Menos vendido
+function menosVendidoDeEnero(){
 
-function total(userValue){
+	products.sort(function (a, b) {
+		if (a.Enero < b.Enero) {
+		  return 1;
+		}
+		if (a.Enero > b.Enero) {
+		  return -1;
+		}
+		return 0;
+	  });
+	
+	let menosVendido= products.slice(products.length -1) 
+	console.log("El menos vendido de enero ", menosVendido);
+}
+menosVendidoDeEnero()
 
+
+// Total producto por mes
+ function total(userValue){
 	for (let i = 0; i < products.length; i++) {
 		if(products[i].Producto == userValue){
 			let rs = products[i].Enero + products[i].Febrero + 	products[i].Marzo + products[i].Abril + products[i].Mayo + products[i].Junio
-			console.log(rs);
+			console.log("Venta total del producto por meses", rs);
 		}
 	}
 }
 total('Auriculares Airpods Pro')
 
 
- 
 
-/* {
-    Producto: "Smartphone Galaxy S23",
-    Enero: 100,
-    Febrero: 120,
-    Marzo: 150, 
-    Abril: 130, 
-    Mayo: 110, 
-    Junio:140
-}, */
+//El mas vendido en los meses
+/* products.sort(function (a,b) {
+  return a.Enero - b.Enero;
+});
+let enero = products.slice(products.length -1)
+products.sort(function (a,b) {
+  return a.Febrero - b.Febrero;
+});
+let febrero = products.slice(products.length -1)
+products.sort(function (a,b) {
+  return a.Marzo - b.Marzo;
+});
+let marzo = products.slice(products.length -1)
+products.sort(function (a,b) {
+  return a.Abril - b.Abril;
+});
+let abril = products.slice(products.length -1)
+products.sort(function (a,b) {
+  return a.Mayo - b.Mayo;
+});
+let mayo = products.slice(products.length -1)
+products.sort(function (a,b) {
+  return a.Junio - b.Junio;
+});
+let junio = products.slice(products.length -1)
+
+let rs = [enero, febrero,marzo, abril, mayo, junio]
+
+
+let nuevaRespuesta = rs.slice(rs.length -1)
+
+console.log(nuevaRespuesta); */
+
+
+function totalDeVentasPorMes(){
+	let total = [];
+	for (let i = 0; i < products.length; i++) {
+		let product = products[i]
+		let suma = product.Enero + product.Febrero + product.Marzo + product.Abril + product.Mayo +product.Junio
+		let nuevoObj = {
+			product: product.Producto,
+			total: suma
+		}
+		total.push(nuevoObj)
+	}
+	return total
+}
+console.log(totalDeVentasPorMes());
+
+function masVendidoTodos(){
+	let totalVentas = totalDeVentasPorMes()
+	let sortetTotales = totalVentas.sort(function(a,b){
+		return a.total - b.total
+	})
+	let more = sortetTotales.slice(sortetTotales.length -1)
+	return more
+}
+
+console.log(masVendidoTodos());
